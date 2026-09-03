@@ -1,29 +1,33 @@
-# XDR-Lens
+# XDR-Lens: Soroban Pre-Execution Diagnostic Studio
 
 [![CI](https://github.com/SmartCraftGroup/xdr-lens/actions/workflows/ci.yml/badge.svg)](https://github.com/SmartCraftGroup/xdr-lens/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-v14-black.svg)](https://nextjs.org/)
+[![Stellar Protocol 20+](https://img.shields.io/badge/Stellar-Protocol%2020%2B-purple.svg)](https://stellar.org)
 [![Drips Wave](https://img.shields.io/badge/Drips-Stellar%20Wave-blue.svg)](https://drips.network)
 
-**XDR-Lens** is an interactive Stellar XDR transaction visualizer, decoder, and pre-broadcast simulator. It allows developers, QA engineers, and security auditors to decode raw Stellar base64 XDR payloads, inspect transaction envelope operations, simulate execution outcomes against Testnet/Mainnet RPCs, and view clear before-and-after balance change diagnostics.
+**XDR-Lens** is an interactive **Soroban Pre-Execution Diagnostic Studio** built for Stellar smart contract developers, QA engineers, and security auditors. Unlike generic XDR tools, XDR-Lens specializes in analyzing **Soroban CPU & RAM footprints**, decoding nested **`SorobanAuthorizationEntry` call trees**, and dry-running execution against Stellar RPC endpoints before signing or broadcasting transactions to the ledger.
 
 ---
 
 ## Why XDR-Lens Exists
 
-Stellar transactions and ledger entries are serialized in base64 XDR (External Data Representation). 
+Stellar transactions and smart contract invocations are serialized in binary Base64 XDR (External Data Representation).
 
-While standard Laboratory tools decode basic XDR fields, developers lack an interactive tool that **simulates execution outcomes before broadcasting** — showing expected fee-bump wrappers, account balance changes, operation call trees, and exact failure diagnostics without risking real funds.
+While standard laboratory tools decode raw XDR fields into flat JSON structures, developers face significant friction when debugging complex Soroban transactions:
+- **Obscure Resource Limits:** No simple visual feedback on whether a contract call will exceed CPU instructions or RAM read byte limits.
+- **Nested Auth Tree Complexity:** Multi-contract invocations require tracing authorized signers, nonces, and signature expiration ledgers across nested sub-calls.
+- **Pre-Broadcast Risk:** Developers need instant, dry-run simulation feedback with decoded return values and emitted diagnostic events without broadcasting real transactions.
 
 ---
 
 ## Key Features
 
-- **Interactive XDR Decoder:** Paste any Stellar XDR (`TransactionEnvelope`, `TransactionResult`, `LedgerEntry`) for instant tree-view decomposition.
-- **Pre-Broadcast Simulation:** Simulates transaction execution against live Horizon RPCs (`simulateTransaction`), detailing CPU/RAM gas costs and return codes.
-- **Visual Balance Diff:** Displays a human-readable diff of account XLM and asset token balances resulting from transaction execution.
-- **Operation Call Tree:** Renders multi-operation transactions (Payment, ChangeTrust, SetOptions, ManageBuyOffer) into clean visual flow diagrams.
-- **Chrome Extension Compatible:** Inspect XDR payloads directly from dApp web pages or explorer URLs.
+- 🔬 **Soroban Footprint & Gas Analyzer:** Visualizes CPU instruction gas meters, memory read footprints (KB), and minimum resource fees in stroops.
+- 🛡️ **Auth Entry Tree Visualizer:** Recursively decodes `SorobanAuthorizationEntry` trees, highlighting contract call targets, function arguments, nonces, and signature requirement scopes.
+- ⚡ **Pre-Execution RPC Simulator:** Dry-runs transaction execution live against Stellar Testnet, Mainnet, and Futurenet Soroban RPC endpoints without risking real funds.
+- 📦 **Envelope & Operations Tree Decoder:** Full support for `ENVELOPE_TYPE_TX`, `ENVELOPE_TYPE_TX_FEE_BUMP`, fee-bump wrappers, sequence numbers, and operation summaries.
+- 🎯 **Pre-Loaded Sample Payloads:** Includes instant test vectors for Soroban contract calls, classic XLM payments, and fee bump transactions.
 
 ---
 
@@ -36,17 +40,17 @@ While standard Laboratory tools decode basic XDR fields, developers lack an inte
                                 | (Base64 XDR Payload)
                                 v
                       +-------------------+
-                      |     xdr-lens      |
-                      |  (Decoder Engine) |
-                      +---------+---------+
-                                |
-       +------------------------+------------------------+
-       |                                                 |
-       v                                                 v
-+-------------------------------+               +-------------------------------+
-| @stellar/stellar-sdk Decoder  |               | Horizon Simulation API        |
-| (Envelope / Operations Tree)  |               | (Pre-Broadcast Diff Engine)   |
-+-------------------------------+               +-------------------------------+
+                      |     XDR-Lens      |
+                      | (Diagnostic Engine)|
+                      +----+----+----+----+
+                           |    |    |
+        +------------------+    |    +------------------+
+        |                       v                       |
+        v               +---------------+               v
++---------------+       |  Auth Tree    |       +---------------+
+| Envelope      |       |  Decoder      |       | Live Soroban  |
+| Parser        |       +---------------+       | RPC Simulator |
++---------------+                               +---------------+
 ```
 
 ---
@@ -66,15 +70,20 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+### 3. Run Typecheck & Build
+```bash
+npm run typecheck
+npm run build
+```
+
 ---
 
 ## Supported XDR Types
 
 - `TransactionEnvelope` (`ENVELOPE_TYPE_TX_V0`, `ENVELOPE_TYPE_TX`, `ENVELOPE_TYPE_TX_FEE_BUMP`)
+- `SorobanTransactionData` & `LedgerKey` Footprints (`contractData`, `contractCode`, `ttl`, `account`, `trustline`)
+- `SorobanAuthorizationEntry` & `SorobanAuthorizedInvocation` Trees
 - `TransactionResult`
-- `LedgerEntry`
-- `AccountEntry`
-- `TrustLineEntry`
 
 ---
 
@@ -84,6 +93,13 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 |---|---|---|
 | **Abdulmalik Ojo** (`@tecmalik`) | Maintainer | [abdulmalikojo2@gmail.com](mailto:abdulmalikojo2@gmail.com) |
 | **Hikmah Oladele** (`@Hikmaholadele`) | Maintainer | [edit@gmail.com](mailto:edit@gmail.com) |
+
+---
+
+## Security & Contributions
+
+- Please see [`SECURITY.md`](./SECURITY.md) for vulnerability reporting and security audit status disclaimers.
+- Please see [`CONTRIBUTING.md`](./CONTRIBUTING.md) for contribution guidelines and conventional commit rules.
 
 ---
 
