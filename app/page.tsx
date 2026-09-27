@@ -182,10 +182,10 @@ export default function Home() {
         )}
       </main>
 
-      <footer className="border-t border-stellar-border py-6 bg-stellar-dark text-center text-xs text-gray-500">
+      <footer className="border-t border-stellar-border py-3 bg-stellar-dark text-center text-[10px] text-gray-500">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>XDR-Lens v0.1.0 — Built for the Stellar Drips Wave Program</span>
-          <span className="text-gray-400">Open Source MIT License</span>
+          <span>XDR-Lens v0.1.0 • Stellar Drips Wave Program</span>
+          <span className="text-gray-500">MIT License</span>
         </div>
       </footer>
     </div>

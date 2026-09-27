@@ -1,6 +1,6 @@
 # XDR-Lens: Soroban Pre-Execution Diagnostic Studio
 
-[![CI](https://github.com/SmartCraftGroup/xdr-lens/actions/workflows/ci.yml/badge.svg)](https://github.com/SmartCraftGroup/xdr-lens/actions/workflows/ci.yml)
+[![CI](https://github.com/AstroForgeLabs/xdr-lens/actions/workflows/ci.yml/badge.svg)](https://github.com/AstroForgeLabs/xdr-lens/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-v14-black.svg)](https://nextjs.org/)
 [![Stellar Protocol 20+](https://img.shields.io/badge/Stellar-Protocol%2020%2B-purple.svg)](https://stellar.org)
@@ -59,7 +59,7 @@ While standard laboratory tools decode raw XDR fields into flat JSON structures,
 
 ### 1. Clone & Install
 ```bash
-git clone https://github.com/SmartCraftGroup/xdr-lens.git
+git clone https://github.com/AstroForgeLabs/xdr-lens.git
 cd xdr-lens
 npm install
 ```
@@ -92,7 +92,7 @@ npm run build
 | Maintainer | Role | Contact |
 |---|---|---|
 | **Abdulmalik Ojo** (`@tecmalik`) | Maintainer | [abdulmalikojo2@gmail.com](mailto:abdulmalikojo2@gmail.com) |
-| **Hikmah Oladele** (`@Hikmaholadele`) | Maintainer | [edit@gmail.com](mailto:edit@gmail.com) |
+| **Hikmah Oladele** (`@Hikmaholadele`) | Maintainer | [hikmaholadele@gmail.com](mailto:hikmaholadele@gmail.com) |
 
 ---
 
