@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test": "node --import tsx/esm --test lib/xdr-parser.test.ts"
+    "test": "tsx --test lib/xdr-parser.test.ts"
   },
   "dependencies": {
     "@stellar/stellar-sdk": "^12.3.0",
